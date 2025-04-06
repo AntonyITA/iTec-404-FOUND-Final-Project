@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Culture Drop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/Logo/logoWhite.png" type="icon/x-image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    :root{
+        --primary: #cb2111;
+        --secondary: #fc2525;
+        --dark: #1a1a2e;
+        --light: #f8f9fa;
+        --accent: #ffd700;
+        --text-white: #ffffff;
+        --text-black: #000000;
+        --text-red: #fc2525;
+
+        /* Theme variables from indexPrin.html */
+        --bg-color: #1a1a2e;
+        --text-color: #f8f9fa;
+        --nav-bg: rgba(0, 0, 0, 0.95);
+        --card-bg: rgba(255, 255, 255, 0.1);
+        --overlay-color: rgba(0, 0, 0, 0.85);
+        --transition-speed: 0.7s;
+        --nav-transition-speed: 0.3s;
+    }
+
+    [data-theme="light"] {
+        --bg-color: #f5f5f5;
+        --text-color: #333;
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --card-bg: rgba(0, 0, 0, 0.1);
+        --overlay-color: rgba(255, 255, 255, 0.8);
+        /* Override specific text colors if needed */
+        --text-white: #000000;
+        --text-black: #000000;
+        /* Adjust borders for light theme */
+        nav,
+        .cart-section,
+        .cart-item,
+        .cart-item-options,
+        .cart-item-qty,
+        .item-qty {
+             border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .logo-container {
+             border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .cart-item {
+             border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+        }
+         /* Adjust backgrounds for light theme if needed */
+        .cart-item,
+        .cart-item-options,
+        .cart-item-qty,
+        .item-qty,
+        .size-option,
+        .cart-item-badge,
+        .menu-toggle,
+        .nav-close-btn {
+             background: rgba(0, 0, 0, 0.05);
+        }
+         .size-option.selected {
+             background: var(--primary);
+             color: white;
+         }
+         .remove-item {
+            color: var(--text-color);
+         }
+         .remove-item:hover {
+            background: var(--text-red);
+            color: white;
+         }
+         .checkout-btn {
+            color: white;
+         }
+         .menu-toggle, .nav-close-btn {
+            color: var(--text-color);
+         }
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+        transition: background-color var(--transition-speed) ease,
+                    color var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease,
+                    box-shadow var(--transition-speed) ease;
+    }
+
+    body {
+        display: flex;
+        min-height: 100vh;
+        background: var(--bg-color);
+        background: linear-gradient(var(--overlay-color), var(--overlay-color)), url('mahdi-soheili-1UfPaDcmUAI-unsplash.jpg');
+        color: var(--text-color);
+        transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* Left Navigation */
+    nav {
+        width: 250px;
+        background: var(--nav-bg);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 30px 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 1000;
+        transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--nav-transition-speed) ease, width var(--nav-transition-speed) ease;
+    }
+
+    .logo-container {
+        padding: 0 15px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logo-container::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--text-red), transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .logo-text {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--text-color);
+        font-size: 21px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-align: center;
+        text-transform: uppercase;
+        animation: glow 2s ease-in-out infinite alternate;
+        padding-right: 30px;
+        transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
+    }
+
+    @keyframes glow {
+        from {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        to {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+    }
+
+    .logo-container img {
+        height: 75px;
+        transition: transform 0.3s;
+    }
+
+    .logo-container img:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-section {
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+
+    .nav-title {
+        color: var(--text-color);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        padding: 0 10px;
+        opacity: 0.6;
+        transition: color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    ul li {
+        margin-bottom: 5px;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 14px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: all 0.3s, color var(--transition-speed) ease;
+        position: relative;
+    }
+
+    a:hover {
+        background: var(--card-bg);
+    }
+
+    a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    a:hover::before {
+        opacity: 1;
+    }
+
+    a i.fas {
+        min-width: 18px;
+        text-align: center;
+        color: var(--text-color);
+        transition: color var(--transition-speed) ease;
+    }
+
+    main {
+        margin-left: 250px;
+        padding: 40px;
+        flex: 1;
+        animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(0); }
+    }
+
+    .cart-section {
+        background: var(--card-bg);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    }
+
+    .cart-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .cart-section h2 {
+        color: var(--text-color);
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cart-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+
+    .cart-item:hover::before {
+        transform: translateX(100%);
+    }
+
+    .cart-item:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .cart-item img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-item img:hover {
+        transform: scale(1.1) rotate(2deg);
+    }
+
+    .cart-item-details {
+        flex: 1;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .cart-item-title {
+        color: var(--text-color);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: inline-block;
+    }
+
+    .cart-item-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 2px;
+    }
+
+    .cart-item-price {
+        color: var(--text-red);
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        margin: 10px 0;
+    }
+
+    .cart-item-description {
+        color: var(--text-color);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        opacity: 0.7;
+        transition: color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+    }
+
+    .cart-item-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 15px 0;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    }
+
+    .options-label {
+        color: var(--text-color);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        font-weight: 500;
+        opacity: 0.8;
+        transition: color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+    }
+
+    .color-options, .size-options {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .color-option, .size-option {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .color-option:hover, .size-option:hover {
+        transform: scale(1.1);
+    }
+
+    .color-option.selected, .size-option.selected {
+        border-color: var(--text-red);
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(252, 37, 37, 0.3);
+    }
+
+    .color-blue { background-color: #007bff; }
+    .color-black { background-color: #000000; }
+    .color-white { background-color: #ffffff; border: 1px solid #ddd; }
+    .color-red { background-color: #dc3545; }
+
+    .size-option {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 500;
+        transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, all 0.3s ease;
+    }
+
+    .size-option.selected {
+        background: var(--text-red);
+        color: white;
+    }
+
+    .cart-item-qty {
+        margin: 15px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    }
+
+    .qty-label {
+        color: var(--text-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0.8;
+        transition: color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+    }
+
+    .item-qty {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-color);
+        padding: 8px 12px;
+        border-radius: 5px;
+        width: 70px;
+        text-align: center;
+        transition: all 0.3s ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        font-size: 1rem;
+    }
+
+    .item-qty:focus {
+        outline: none;
+        border-color: var(--text-red);
+        box-shadow: 0 0 10px rgba(252, 37, 37, 0.2);
+    }
+
+    .remove-item {
+        background: transparent;
+        border: 2px solid var(--text-red);
+        color: var(--text-color);
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        align-self: flex-start;
+        margin-top: 10px;
+    }
+
+    .remove-item:hover {
+        background: var(--text-red);
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(252, 37, 37, 0.3);
+    }
+
+    .cart-item-badges {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .cart-item-badge {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-color);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    }
+
+    .cart-item-badge i {
+        color: var(--text-red);
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .total-price {
+        color: var(--text-red);
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 20px 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        text-align: right;
+    }
+
+    .checkout-btn {
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 15px 30px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        box-shadow: 0 5px 15px rgba(203, 33, 17, 0.3);
+    }
+
+    .checkout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(203, 33, 17, 0.4);
+        background: linear-gradient(45deg, var(--secondary), var(--primary));
+    }
+
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        nav {
+            transform: translateX(-100%);
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            padding-top: 60px;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        nav.nav-open {
+            transform: translateX(0);
+        }
+
+        .nav-close-btn {
+            display: none;
+        }
+
+        nav.nav-open .nav-close-btn {
+            display: block;
+        }
+
+        main {
+            margin-left: 0;
+            padding: 20px;
+            width: 100%;
+            padding-top: 80px;
+        }
+
+        .logo-container {
+            padding: 0 15px 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-container img {
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+        }
+
+        .nav-section {
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .cart-section {
+            padding: 1rem;
+            margin: 10px;
+        }
+
+        .cart-item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .cart-item img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        .cart-item-details {
+            padding: 10px 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-qty {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .remove-item {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .cart-summary {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .total-price {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo-container img {
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+        }
+
+        .cart-section h2 {
+            font-size: 1.5rem;
+        }
+
+        .cart-item img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .cart-item-title {
+            font-size: 1rem;
+        }
+
+        .cart-item-price {
+            font-size: 1rem;
+        }
+
+        .cart-section {
+            padding: 0.8rem;
+            margin: 5px;
+        }
+    }
+
+    /* Theme Toggle Button Styles (from indexPrin.html) */
+    .theme-toggle {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        background: var(--card-bg);
+        border-radius: 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        margin: 15px auto;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color var(--transition-speed) ease;
+        border: 1px solid var(--text-color);
+        overflow: hidden;
+    }
+
+    .theme-toggle::before {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--text-color);
+        left: 2px;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-toggle i {
+        display: block;
+        font-size: 14px;
+        color: var(--text-color);
+        position: absolute;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+
+    .theme-toggle .fa-sun {
+        right: 8px;
+        opacity: 1;
+        transition: opacity 0.3s ease 0.2s, color var(--transition-speed) ease;
+    }
+
+    .theme-toggle .fa-moon {
+        left: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease, color var(--transition-speed) ease;
+    }
+
+    [data-theme="light"] .theme-toggle .fa-sun {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    [data-theme="light"] .theme-toggle .fa-moon {
+        opacity: 1;
+        transition: opacity 0.3s ease 0.2s;
+    }
+
+    [data-theme="light"] .theme-toggle::before {
+        transform: translateX(30px);
+        background: var(--primary);
+    }
+
+    .theme-toggle:hover {
+        transform: scale(1.05);
+    }
+
+    .theme-toggle:active::before {
+        transform: scale(0.95);
+    }
+
+    .theme-toggle::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        background: var(--primary);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .theme-toggle:hover::after {
+        opacity: 0.1;
+    }
+
+    /* Theme Transition Class */
+    .theme-transition, .theme-transition * {
+        transition: all var(--transition-speed) ease !important;
+    }
+
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="sideNav">
+        <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        
+        <div class="nav-section">
+            <div class="nav-title">Menu</div>
+            <ul>
+                <li><a href="indexPrin.html#top" class="nav-link"><i class="fas fa-home"></i><span>Home</span></a></li>
+                <li><a href="indexPrin.html#tshirts-section" class="nav-link"><i class="fas fa-tshirt"></i><span>T-Shirts</span></a></li>
+                <li><a href="indexPrin.html#hoodies-section" class="nav-link"><i class="fas fa-user-tie"></i><span>Hoodies</span></a></li>
+                <li><a href="indexPrin.html#jeans-section" class="nav-link"><i class="fas fa-socks"></i><span>Jeans</span></a></li>
+                <li><a href="indexPrin.html#shoes-section" class="nav-link"><i class="fas fa-shoe-prints"></i><span>Shoes</span></a></li>
+                <li><a href="indexPrin.html#accessories-section" class="nav-link"><i class="fas fa-glasses"></i><span>Accessories</span></a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Theme</div>
+            <ul>
+                <li>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Account</div>
+            <ul>
+                <li><a href="singin.html"><i class="fas fa-user"></i><span>My Account</span></a></li>
+                <li><a href="checkout.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a></li>
+                <li><a href="wishlist.html"><i class="fas fa-heart"></i><span>Wishlist</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="cart-section">
+            <h2>Your Shopping Cart</h2>
+            
+            <div class="cart-item">
+                <img src="/images-videos/Hoodies/hoodie1.png" alt="Product 1">
+                <div class="cart-item-details">
+                    <div>
+                        <div class="cart-item-title">Air Jordan x Cactus Jack - Limited Edition</div>
+                        <div class="cart-item-price">$279.99</div>
+                        <div class="cart-item-description">Premium cotton blend with a comfortable fit. Perfect for everyday wear or casual outings.</div>
+                        
+                        <div class="cart-item-options">
+                            <div class="options-label">Color:</div>
+                            <div class="color-options">
+                                <div class="color-option color-blue selected" title="Blue"></div>
+                                <div class="color-option color-black" title="Black"></div>
+                                <div class="color-option color-white" title="White"></div>
+                                <div class="color-option color-red" title="Red"></div>
+                            </div>
+                            
+                            <div class="options-label">Size:</div>
+                            <div class="size-options">
+                                <div class="size-option selected">S</div>
+                                <div class="size-option">M</div>
+                                <div class="size-option">L</div>
+                                <div class="size-option">XL</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item-qty">
+                            <div class="qty-label">Quantity:</div>
+                            <input type="number" value="1" min="1" class="item-qty">
+                        </div>
+                        
+                        <div class="cart-item-badges">
+                            <div class="cart-item-badge"><i>✓</i> In Stock</div>
+                            <div class="cart-item-badge"><i>★</i> Premium</div>
+                        </div>
+                    </div>
+                    
+                    <button class="remove-item">Remove</button>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <img src="/images-videos/Hoodies/hoddie4png.png" alt="Product 2">
+                <div class="cart-item-details">
+                    <div>
+                        <div class="cart-item-title">Off-White™ Hoodie</div>
+                        <div class="cart-item-price">$79.99</div>
+                        <div class="cart-item-description">Warm and cozy hoodie made from high-quality materials. Features a comfortable hood and kangaroo pocket.</div>
+                        
+                        <div class="cart-item-options">
+                            <div class="options-label">Color:</div>
+                            <div class="color-options">
+                                <div class="color-option color-blue" title="Blue"></div>
+                                <div class="color-option color-black selected" title="Black"></div>
+                                <div class="color-option color-white" title="White"></div>
+                                <div class="color-option color-red" title="Red"></div>
+                            </div>
+                            
+                            <div class="options-label">Size:</div>
+                            <div class="size-options">
+                                <div class="size-option">S</div>
+                                <div class="size-option selected">M</div>
+                                <div class="size-option">L</div>
+                                <div class="size-option">XL</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-item-qty">
+                            <div class="qty-label">Quantity:</div>
+                            <input type="number" value="1" min="1" class="item-qty">
+                        </div>
+                        
+                        <div class="cart-item-badges">
+                            <div class="cart-item-badge"><i>✓</i> In Stock</div>
+                            <div class="cart-item-badge"><i>★</i> Best Seller</div>
+                        </div>
+                    </div>
+                    
+                    <button class="remove-item">Remove</button>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <div class="total-price">Total:</div>   
+                <a href="checkout.html"><button class="checkout-btn">Proceed to Checkout</button></a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function updateTotal() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            let total = 0;
+
+            cartItems.forEach(item => {
+                const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('$', ''));
+                const quantity = item.querySelector('.item-qty').value;
+                total += price * quantity;
+            });
+
+            document.querySelector('.total-price').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        document.querySelectorAll('.item-qty').forEach(input => {
+            input.addEventListener('input', updateTotal);
+        });
+
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.target.closest('.cart-item').remove();
+                updateTotal();
+            });
+        });
+
+        // Color selection
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const colorOptions = this.parentElement.querySelectorAll('.color-option');
+                colorOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Size selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const sizeOptions = this.parentElement.querySelectorAll('.size-option');
+                sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        updateTotal();  // Initial call to calculate the total when the page is loaded
+
+        // Wait for the DOM to be fully loaded before running nav script
+        document.addEventListener('DOMContentLoaded', () => {
+            // Responsive Nav Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navCloseBtn = document.getElementById('navCloseBtn');
+            const sideNav = document.getElementById('sideNav');
+
+            if (menuToggle && sideNav) {
+                menuToggle.addEventListener('click', () => {
+                    sideNav.classList.add('nav-open');
+                });
+            }
+
+            if (navCloseBtn && sideNav) {
+                navCloseBtn.addEventListener('click', () => {
+                    sideNav.classList.remove('nav-open');
+                });
+            }
+
+            // Optional: Close nav when clicking outside of it on mobile
+            document.addEventListener('click', (event) => {
+                if (sideNav.classList.contains('nav-open')) {
+                    const isClickInsideNav = sideNav.contains(event.target);
+                    const isClickOnToggle = menuToggle.contains(event.target);
+
+                    if (!isClickInsideNav && !isClickOnToggle) {
+                        sideNav.classList.remove('nav-open');
+                    }
+                }
+            });
+
+            // --- Theme Toggle Functionality ---
+            const themeToggle = document.getElementById('themeToggle');
+            const logoImg = document.querySelector('.logo-link img');
+
+            function updateLogo(theme) {
+                if (logoImg) {
+                   logoImg.src = theme === 'dark' ? '/Logo/logoBlack.png' : '/Logo/logoWhite.png';
+                }
+            }
+
+            // Check for saved theme preference, default to dark if none saved
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateLogo(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                // Add transition class before changing theme
+                document.body.classList.add('theme-transition');
+
+                // Change theme
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateLogo(newTheme);
+
+                // Remove transition class after animation completes
+                setTimeout(() => {
+                    document.body.classList.remove('theme-transition');
+                }, 700);
+            });
+            // --- End Theme Toggle Functionality ---
+
+        });
+
+    </script>
+</body>
+</html>

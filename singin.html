@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare</title>
+    <link rel="icon" href="/Logo/logoWhite.png" type="icon/x-image">
+
+    <style>
+        /* Păstrăm același stil ca în pagina de autentificare */
+        /* Începe stilul copiat din pagina ta anterioară */
+        :root {
+            --primary: #cb1111;
+            --secondary: #2575fc;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(45deg, var(--dark)30%, #f00);
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .login-wrapper {
+            display: flex;
+            width: 1000px;
+            height: 600px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        #LoginForm {
+            display: none;
+        }
+        .login-wrapper.active #LoginForm {
+            display: block;
+        }
+        .login-wrapper.active #SignupForm {
+            display: none;
+        }
+        .preview-section {
+            flex: 1;
+            position: relative;
+            background: url('giphy.gif') center/cover;
+            animation: gifGlow 4s ease-in-out infinite;
+        }
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(26,26,46,0.9) 0%, rgba(106,17,203,0.2) 100%);
+        }
+        .login-container {
+            width: 400px;
+            padding: 30px 50px 50px 50px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .login-header h1 {
+            font-size: 32px;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+        }
+        .login-header p {
+            color: rgb(255, 255, 255);
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 35px;
+            font-size: 14px;
+            color: white;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+        }
+        .form-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-80%);
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        .form-group input:focus + label,
+        .form-group input:valid + label {
+            top: -5px;
+            font-size: 12px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            opacity: 0.9;
+            background-color: red;
+            transform: translateY(-3px);
+        }
+        .divider {
+            margin: 30px 0;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            text-shadow: 0 0 15px rgba(155, 42, 163, 0.3);
+        }
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .google { background: #DB4437; }
+        .facebook { background: #4267B2; }
+        .twitter { background: #1DA1F2; }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+        .signup-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .signup-link a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(202, 11, 11, 0.5);
+        }
+        @keyframes gifGlow {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+        @media (max-width: 1040px) {
+            .login-wrapper {
+                width: 90%;
+                height: auto;
+                flex-direction: column;
+            }
+            .preview-section { 
+                display: none; 
+            }
+            .login-container { 
+                width: 100%; 
+                padding: 40px 30px;
+                border-left: none;
+                border-radius: 30px;
+            }
+        }
+        @media (max-width: 480px) {
+            .login-wrapper { 
+                width: 95%; 
+                margin: 20px;
+            }
+            .login-container {
+                padding: 30px 20px;
+            }
+            .login-header h1 {
+                font-size: 28px;
+                font-weight: 900;
+            }
+            .form-group input {
+                padding: 12px 15px;
+            }
+            .submit-btn {
+                padding: 12px;
+            }
+        }
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+        .form-remember {
+            margin: 15px 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-remember input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+        .form-remember label {
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="login-wrapper">
+        <div class="login-container" id="SignupForm">
+            <div class="login-header">
+                <h1>Crează-ți contul</h1>
+                <p>Pasul 1 spre lifestyle-ul pe care îl meriți.</p>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <input type="text" id="signup-fullname" required>
+                    <label for="signup-fullname">Nume complet</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="signup-email" required>
+                    <label for="signup-email">Adresă email</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="signup-password" required>
+                    <label for="signup-password">Parolă</label>
+                </div>
+
+                <button type="submit" class="submit-btn">ÎNREGISTREAZĂ-TE</button>
+
+                <div class="divider">SAU ÎNREGISTREAZĂ-TE CU</div>
+
+                <div class="social-login">
+                    <a href="https://shorturl.at/00Nja" class="social-btn google">G</a>
+                    <a href="https://www.facebook.com/" class="social-btn facebook">f</a>
+                    <a href="https://x.com/?lang=en" class="social-btn twitter">X</a>
+                </div>
+
+                <div class="signup-link">
+                    Ai deja un cont? <a href="#" onclick="toggleForms()">Autentifică-te</a>
+                </div>
+            </form>
+        </div>
+        <div class="login-container" id="LoginForm">
+            <div class="login-header">
+                <h1>Bine ai revenit</h1>
+                <p>Luxul nu este o etichetă de preț, este o aură - iar muzica trap este coloana sonoră.</p>
+            </div>
+    
+            <form id="actualLoginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <input type="email" id="login-email" required>
+                    <label for="login-email">Adresă email</label>
+                </div>
+    
+                <div class="form-group">
+                    <input type="password" id="login-password" required>
+                    <label for="login-password">Parolă</label>
+                </div>
+    
+                <button type="submit" class="submit-btn">AUTENTIFICARE</button>
+                <div class="form-remember">
+                    <input type="checkbox" id="remember" />
+                <label for="remember">Ține-mă minte</label>
+                </div>
+    
+                <div class="divider">SAU CONECTEAZĂ-TE CU</div>
+    
+                <div class="social-login">
+                    <a href="https://shorturl.at/00Nja" class="social-btn google">G</a>
+                    <a href="https://www.facebook.com/" class="social-btn facebook">f</a>
+                    <a href="https://x.com/?lang=en" class="social-btn twitter">X</a>
+                </div>
+    
+                <div class="signup-link">
+                    Nu ai cont? <a href="#" onclick="toggleForms()">Înregistrează-te</a>
+                </div>
+            </form>
+        </div>
+        <div class="preview-section">
+            <div class="preview-overlay"></div>
+        </div>
+    </div>
+
+    <script>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 10 + 5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 15}s`;
+            particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            particlesContainer.appendChild(particle);
+        }
+
+        function toggleForms() {
+            const wrapper = document.querySelector('.login-wrapper');
+            wrapper.classList.toggle('active');
+        }
+
+        // Login validation function
+        function handleLoginSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const emailInput = document.getElementById('login-email');
+            const passwordInput = document.getElementById('login-password');
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (email && password) {
+                // Both fields are filled, redirect to index page
+                window.location.href = 'indexPrin.html';
+            } else {
+                // One or both fields are empty, show an alert
+                alert('Vă rugăm să completați adresa de email și parola.');
+
+                 // Optional: Add visual feedback
+                 if (!email) emailInput.style.borderColor = 'red'; else emailInput.style.borderColor = '';
+                 if (!password) passwordInput.style.borderColor = 'red'; else passwordInput.style.borderColor = '';
+            }
+        }
+    </script>
+</body>
+</html>

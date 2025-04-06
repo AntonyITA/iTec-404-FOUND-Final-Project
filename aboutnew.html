@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture Drop | About Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --neon-pink: #ff0000;
+            --neon-cyan: #ff0000;
+            --neon-purple: #f02020;
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --text-light: #f1f1f1;
+            --text-gray: #aaaaaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--neon-pink);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            background: var(--neon-pink);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(transparent, var(--dark-bg));
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--neon-purple);
+            animation: glow 2s infinite alternate;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+            to {
+                text-shadow: 0 0 20px var(--neon-pink), 0 0 30px var(--neon-cyan);
+            }
+        }
+        
+        /* Who We Are Section */
+        .who-we-are {
+            padding: 100px 0;
+            background-color: var(--dark-bg);
+        }
+        
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .split-grid-left {
+            font-size: 5rem;
+            line-height: 1;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+        
+        .split-grid-right p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-gray);
+            border-left: 3px solid var(--neon-pink);
+            padding-left: 20px;
+        }
+        
+        /* The Culture Section */
+        .the-culture {
+            padding: 80px 0;
+            background-color: var(--darker-bg);
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: underlineGrow 1.5s forwards;
+        }
+        
+        @keyframes underlineGrow {
+            to {
+                transform: scaleX(1);
+            }
+        }
+        
+        .fashion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .fashion-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+        }
+        
+        .fashion-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .fashion-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .fashion-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--text-light);
+        }
+        
+        .fashion-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--neon-cyan);
+        }
+        
+        .fashion-overlay p {
+            font-size: 1rem;
+            color: var(--text-gray);
+        }
+        
+        /* Meet the Team */
+        .meet-team {
+            padding: 100px 0;
+            background-color: var(--dark-bg);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 3px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            position: relative;
+        }
+        
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%);
+            transition: filter 0.3s ease;
+        }
+        
+        .team-member:hover .team-photo img {
+            filter: grayscale(0%) contrast(100%);
+        }
+        
+        .team-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, var(--neon-pink), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .team-member:hover .team-photo::before {
+            opacity: 0.3;
+        }
+        
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--neon-cyan);
+        }
+        
+        .team-member p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-style: italic;
+        }
+        
+        /* Our Mission */
+        .our-mission {
+            padding: 120px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            position: relative;
+            text-align: center;
+        }
+        
+        .mission-text {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .mission-text p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mission-text::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--neon-pink);
+            z-index: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .mission-text::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--neon-cyan);
+            z-index: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* Join the Wave */
+        .join-wave {
+            padding: 100px 0;
+            background-color: var(--darker-bg);
+            text-align: center;
+        }
+        
+        .newsletter-box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            border: 2px solid var(--neon-pink);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--neon-pink), transparent);
+            opacity: 0.1;
+            animation: borderGlow 4s linear infinite;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .newsletter-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-box p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--text-light);
+            font-size: 1rem;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-input:focus {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        
+        .newsletter-input::placeholder {
+            color: var(--text-gray);
+        }
+        
+        .newsletter-btn {
+            padding: 15px 30px;
+            background: var(--neon-pink);
+            color: var(--dark-bg);
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .newsletter-btn:hover {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        
+        .newsletter-btn:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background-color: #000;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--neon-pink);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .footer-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-logo:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .footer-tagline {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .split-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .split-grid-left {
+                font-size: 3.5rem;
+                text-align: center;
+            }
+            
+            .fashion-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .mission-text p {
+                font-size: 1.2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .fashion-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .split-grid-left {
+                font-size: 2.5rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Culture Drop</h1>
+        <p>A platform dedicated exclusively to trap-inspired streetwear fashion.</p>
+        <a href="indexPrin.html" class="btn">Visit Our Store</a>
+    </div>
+</section>
+
+<!-- Who We Are -->
+<section class="who-we-are">
+    <div class="container">
+        <div class="split-grid">
+            <div class="split-grid-left">
+                AMPLIFYING CULTURE!
+            </div>
+            <div class="split-grid-right">
+                <p>Culture Drop isn't just a store - it's a movement. Born from street culture, we highlight the latest trends in streetwear and trap fashion. No compromises, just authentic style.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The Culture -->
+<section class="the-culture">
+    <div class="container">
+        <div class="section-title">
+            <h2>This Is Our Style</h2>
+        </div>
+        <div class="fashion-grid">
+            <div class="fashion-item">
+                <img src="https://www.fashionbeans.com/wp-content/uploads/2024/10/1-1.jpg" alt="Street Style">
+                <div class="fashion-overlay">
+                    <h3>Street Style</h3>
+                    <p>Authentic looks from the streets</p>
+                </div>
+            </div>
+            <div class="fashion-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/607cc34ebab4b20ba47a3b97/040dd35e-f5c4-4ecb-93cf-f986934fb43c/street-style-inspiration-the-ultimate-guide-to-effortless-urban-fashion.png" alt="Urban Fashion">
+                <div class="fashion-overlay">
+                    <h3>Urban Fashion</h3>
+                    <p>Modern city trends</p>
+                </div>
+            </div>
+            <div class="fashion-item">
+                <img src="trap2.jpg" alt="Trap Culture">
+                <div class="fashion-overlay">
+                    <h3>Trap Culture</h3>
+                    <p>The style that defines a generation</p>
+                </div>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 30px; font-style: italic; color: var(--text-gray);">Trap style isn't just clothing - it's an attitude, an expression, and an identity.</p>
+    </div>
+</section>
+
+<!-- Meet the Team -->
+<section class="meet-team">
+    <div class="container">
+        <div class="section-title">
+            <h2>The Team Behind the Brand</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="DJ Relentless">
+                </div>
+                <h3>D'Aguanno Antony</h3>
+                <p>Curator of the freshest streetwear fits.</p>
+            </div>
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Producer Vex">
+                </div>
+                <h3>Sofroni Maxim</h3>
+                <p>If it's not fresh, it's not in our collection.</p>
+            </div>
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://images.unsplash.com/photo-1516557070061-c3d1653fa646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Trap Editor Lex">
+                </div>
+                <h3>Olteanu Eduard-Ștefan</h3>
+                <p>Scouting the newest trends so you don't have to.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Mission -->
+<section class="our-mission">
+    <div class="container">
+        <div class="mission-text">
+            <p>We preserve authenticity. No copies, no mall vibes - just genuine streetwear. From underground to mainstream, we define the style that inspires a generation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Join the Wave -->
+<section class="join-wave">
+    <div class="container">
+        <div class="newsletter-box">
+            <h2>Stay in the Loop</h2>
+            <p>Get the newest collections, exclusive content, and limited drops straight to your inbox.</p>
+            <form class="newsletter-form" id="newsletterForm" onsubmit="return false;">
+                <input type="email" class="newsletter-input" id="emailInput" placeholder="Your email, no spam - just style." required>
+                <button type="submit" class="newsletter-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-soundcloud"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div class="footer-logo">Culture Drop</div>
+        <p class="footer-tagline">Fueled by Style, Driven by the Streets.</p>
+        <p class="copyright">&copy; 2025 Culture Drop. All rights reserved.</p>
+    </div>
+</footer>
+    
+    <script>
+        // Glitch effect on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const glitchElements = document.querySelectorAll('.split-grid-left, .section-title h2');
+            
+            glitchElements.forEach(element => {
+                if (scrollPosition % 20 < 5) {
+                    element.style.transform = `translateX(${Math.random() * 5}px)`;
+                    element.style.textShadow = `0 0 10px var(--neon-pink)`;
+                } else {
+                    element.style.transform = 'translateX(0)';
+                    element.style.textShadow = 'none';
+                }
+            });
+        });
+        
+        // Newsletter form submission
+        const form = document.getElementById('newsletterForm');
+        const emailInput = document.getElementById('emailInput');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            
+            // Validare email
+            if (!email || !email.includes('@')) {
+                alert('Te rog să introduci o adresă de email validă.');
+                return;
+            }
+            
+            // Simulare trimitere
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Se trimite...';
+            submitButton.disabled = true;
+            
+            // Simulare delay pentru a arăta procesarea
+            setTimeout(() => {
+                alert(`Mulțumim că te-ai alăturat valului, ${email.split('@')[0]}! Îți vom trimite style în inbox în curând.`);
+                emailInput.value = '';
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Culture Drop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/Logo/logoWhite.png" type="icon/x-image">
+    <style>
+    :root{
+        --primary: #cb2111;
+        --secondary: #fc2525;
+        --dark: #1a1a2e;
+        --light: #f8f9fa;
+        --accent: #ffd700;
+        --text-white: #ffffff;
+        --text-black: #000000;
+        --text-red: #fc2525;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+        display: flex;
+        min-height: 100vh;
+        background: #f5f5f5;
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('mahdi-soheili-1UfPaDcmUAI-unsplash.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    main {
+        padding: 40px;
+        flex: 1;
+        animation: slideIn 0.5s ease-out;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    @keyframes slideIn {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(0); }
+    }
+
+    .order-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .order-section {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .order-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .order-header {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .order-header h1 {
+        color: var(--text-white);
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .order-header p {
+        color: var(--text-white);
+        font-size: 1.1rem;
+        opacity: 0.8;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--text-red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        box-shadow: 0 0 20px rgba(252, 37, 37, 0.4);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 20px rgba(252, 37, 37, 0.4); }
+        50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(252, 37, 37, 0.6); }
+        100% { transform: scale(1); box-shadow: 0 0 20px rgba(252, 37, 37, 0.4); }
+    }
+
+    .success-icon i {
+        color: white;
+        font-size: 40px;
+    }
+
+    .order-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .order-info, .shipping-info {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .info-title {
+        color: var(--text-white);
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-item {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .info-label {
+        color: var(--text-white);
+        opacity: 0.7;
+        width: 120px;
+        font-size: 0.9rem;
+    }
+
+    .info-value {
+        color: var(--text-white);
+        font-weight: 500;
+        flex: 1;
+    }
+
+    .order-items {
+        margin-top: 30px;
+    }
+
+    .order-items-title {
+        color: var(--text-white);
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .order-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 15px;
+    }
+
+    .order-item-details {
+        flex: 1;
+    }
+
+    .order-item-title {
+        color: var(--text-white);
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .order-item-variant {
+        color: var(--text-white);
+        font-size: 0.8rem;
+        opacity: 0.7;
+    }
+
+    .order-item-price {
+        color: var(--text-red);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .order-item-qty {
+        color: var(--text-white);
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-left: 15px;
+    }
+
+    .order-summary {
+        margin-top: 30px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .order-summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        color: var(--text-white);
+        font-size: 0.95rem;
+    }
+
+    .order-summary-row.total {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .order-summary-row.total .amount {
+        color: var(--text-red);
+    }
+
+    .order-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .action-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-white);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .action-button:hover {
+        background: var(--text-red);
+        border-color: var(--text-red);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(252, 37, 37, 0.3);
+    }
+
+    .action-button.primary {
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        border: none;
+        box-shadow: 0 5px 15px rgba(203, 33, 17, 0.3);
+    }
+
+    .action-button.primary:hover {
+        background: linear-gradient(45deg, var(--secondary), var(--primary));
+    }
+
+    .tracking-info {
+        margin-top: 30px;
+        text-align: center;
+        color: var(--text-white);
+        opacity: 0.8;
+        font-size: 0.9rem;
+    }
+
+    .tracking-number {
+        color: var(--text-red);
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin: 5px 0 15px;
+    }
+
+    .tracking-link {
+        color: var(--text-red);
+        text-decoration: underline;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .tracking-link:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 1200px) {
+        .order-details {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+        }
+
+        .logo-container {
+            padding: 0 15px 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-container img {
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+        }
+
+        .nav-section {
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .order-section {
+            padding: 1.5rem;
+        }
+
+        .order-header h1 {
+            font-size: 2rem;
+        }
+
+        .order-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .action-button {
+            width: 100%;
+            max-width: 300px;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo-container img {
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+        }
+
+        .order-section {
+            padding: 1rem;
+        }
+
+        .order-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .success-icon i {
+            font-size: 30px;
+        }
+
+        .info-item {
+            flex-direction: column;
+        }
+
+        .info-label {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="order-container">
+            <div class="order-section">
+                <div class="order-header">
+                    <div class="success-icon">
+                        <i>✓</i>
+                    </div>
+                    <h1>Order Confirmed!</h1>
+                    <p>Thank you for your purchase. Your order has been received and is being processed.</p>
+                </div>
+                
+                <div class="order-details">
+                    <div class="order-info">
+                        <div class="info-title">Order Information</div>
+                        <div class="info-item">
+                            <div class="info-label">Order Number:</div>
+                            <div class="info-value">#CD-2023-0528</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Order Date:</div>
+                            <div class="info-value">May 28, 2023</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Payment Method:</div>
+                            <div class="info-value">Credit Card (**** **** **** 1234)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Order Status:</div>
+                            <div class="info-value" style="color: var(--text-red);">Processing</div>
+                        </div>
+                    </div>
+                    
+                    <div class="shipping-info">
+                        <div class="info-title">Shipping Information</div>
+                        <div class="info-item">
+                            <div class="info-label">Name:</div>
+                            <div class="info-value">John Doe</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Address:</div>
+                            <div class="info-value">123 Main Street, Apt 4B</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">City, State:</div>
+                            <div class="info-value">New York, NY 10001</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Country:</div>
+                            <div class="info-value">United States</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-items">
+                    <div class="order-items-title">Order Items</div>
+                    
+                    <div class="order-item">
+                        <img src="product1.jpg" alt="Luxury T-Shirt">
+                        <div class="order-item-details">
+                            <div class="order-item-title">Luxury T-Shirt</div>
+                            <div class="order-item-variant">Blue, Size S</div>
+                        </div>
+                        <div class="order-item-price">$49.99</div>
+                        <div class="order-item-qty">x1</div>
+                    </div>
+                    
+                    <div class="order-item">
+                        <img src="product2.jpg" alt="Stylish Hoodie">
+                        <div class="order-item-details">
+                            <div class="order-item-title">Stylish Hoodie</div>
+                            <div class="order-item-variant">Black, Size M</div>
+                        </div>
+                        <div class="order-item-price">$79.99</div>
+                        <div class="order-item-qty">x1</div>
+                    </div>
+                </div>
+                
+                <div class="order-summary">
+                    <div class="order-summary-row">
+                        <span>Subtotal</span>
+                        <span>$129.98</span>
+                    </div>
+                    
+                    <div class="order-summary-row">
+                        <span>Shipping</span>
+                        <span>$10.00</span>
+                    </div>
+                    
+                    <div class="order-summary-row">
+                        <span>Tax</span>
+                        <span>$13.00</span>
+                    </div>
+                    
+                    <div class="order-summary-row total">
+                        <span>Total</span>
+                        <span class="amount">$152.98</span>
+                    </div>
+                </div>
+                
+                <div class="tracking-info">
+                    <p>Your order will be shipped within 2-3 business days.</p>
+                    <p>Tracking Number: <span class="tracking-number">1Z999AA1234567890</span></p>
+                    <p>You can track your order <span class="tracking-link">here</span> once it ships.</p>
+                </div>
+                
+                <div class="order-actions">
+                    <a href="indexPrin.html" class="action-button primary">
+                        <i>🏠</i> Continue Shopping
+                    </a>
+                    <a href="singin.html" class="action-button">
+                        <i>👤</i> View Order History
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tracking link click handler
+        document.querySelector('.tracking-link').addEventListener('click', function() {
+            alert('Tracking information will be available once your order ships.');
+        });
+    </script>
+</body>
+</html>
